@@ -11,34 +11,17 @@ public class Main {
     public static void main(String[] args) {
 
 
-       Stream<Integer> stream = Stream.iterate(0, i -> ++i);
-       stream
-               .limit(100)
-               .filter(i -> i % 2 == 0)
-               .map(i -> i * 10)
-               .forEach(System.out::println);
-
-      Comparator myComparartor = new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                if (o1 > o2) {
-                    return 1;
-                }  else if (o1 < o2) {
-                    return -1;
-                };
-                return 0;
-            }
-        };
+        System.out.println(Stream.iterate(0, i -> ++i)
+                .limit(100)
+                .filter(i -> i % 2 == 0)
+                .count());
 
       BiConsumer<Integer, Integer> consumer = (integer, integer2)
                                                 -> System.out.println("Минимальное значение: " + integer + " Максимальное значение: " + integer2);
 
-      findMinMax(Stream.iterate(0, i -> (int) (Math.random() * 1000)), myComparartor, consumer);
-
+      findMinMax(Stream.iterate(0, i -> (int) (Math.random() * 1000)), Integer::compare, consumer);
 
     }
-
-
 
     public static <T> void findMinMax (Stream<? extends T> stream,
                                        Comparator<? super T> order,
